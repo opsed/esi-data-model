@@ -1,0 +1,82 @@
+Need to restructure current prototype... 
+
+Remove ExternalResource/TextContent/BinaryContent/Page elements and replace with a single 
+Resource tag that has attributes which define wether or not it's embedded/external
+and which specifies the content encoding as defined in urn:ietf:rfc:1521.5 
+(http://www.freesoft.org/CIE/RFC/1521/5.htm).
+
+Basically, the Resource tag will conform to the RFC1521 spec for mime content streams 
+using attributes for the content header fields... plus some extra gravy for opsed domain 
+specific stuff.
+
+Also need a concept of case/custodian somewhere in here. Currently custodian is just a 
+text string attribute on ESI... Which might be enough, if it's speced to contian a URN. 
+
+Then we'd need to define a urn schema for cases and custodians... 
+urn:opsed:case:5aa2e794-a16e-4fd8-b4c1-8cc2a920ff4e
+urn:opsed:custodian:8857217a-1090-4f09-a7c4-784cc2b88072
+
+and a server that can return some case/custodian schema data...
+and a schema for the data... ;)
+
+for now, we'll just say it's a URN, and leave the definiation of the rest of it up until later. 
+What's important is that it's a unique identifier, which is provisioned by requiring URN.
+
+Resource Tag:
+
+Attributes:
+ * content-type
+   * required
+   * indicates the mime type  of the resource
+ * content-transfer-encoding
+    * required
+    * possible values: "7bit", "8bit", "quoted-printable", "base64", "binary", "uri", "uri-relative"
+    * indicates the specific content-transfer-encoding of the enclosed tag data. 
+ * native
+   * optional
+   * indicates that the resource is the native document, as opposed to some other representation/conversion
+ * unit
+   * required for all instances
+   * possible values are "document" or "unit"
+   * describes wether this resource is a document level or page level resource
+ * controlIDStart
+   * required for all instances
+   * when unit value is "document", indicates beginning of control id range for resource.
+   * when unit value is "page", indicates control id for resource.
+ * controlIDEnd
+   * required only when unit value is "document"
+   * indicates end of control id range for resource.
+ * oridinal 
+   * required only when unit value is "page"
+   * indicates the page ordinal for the specific page level resource within the document scope
+
+There will be an attribute "native" which is a boolean value that defaults to false.
+There will be an attribute "unit" which specifies the unit of measure for the content...  
+Possible values for unit are "page" and "document". 
+
+If unit is "document" then the resource tag should also contain the attributes "controlIDStart" and "controlIDEnd", but not "controlIDEnd".
+If unit is "page" then the resource tag should also contain the attributes "ordinal" and "controlIDStart", but not "controlIDEnd".
+
+content-transfer-encoding attribute: 
+possible values: "7bit", "8bit", "quoted-printable", "base64", "binary", "uri", "uri-relative"
+
+The values "7bit", "8bit", "quoted-printable", "base64", "binary" have exactly the same meaning as they 
+do in urn:ietf:rfc:1521.5, with the addition that they will be escaped to work correctly in XML or embedded
+in a CDATA element (not preferred).  
+
+The values "uri" and "uri-relative" are unique to the opsed format and are used for linking in external resources.
+For "uri", the contents of the tag will be a fully pathed URI to the external resource
+For "uri-relative" the contents will be a relative path (from whatever the current context is). 
+
+EG:
+
+linked resources:
+<Resource content-transfer-encoding="uri" content-type="application/ms-word" isNative="true" unit="document" controlIDStart="BAT00001" controlIDEnd="BAT00002">edap://myserver.com/000/BAT0001.doc</Resource>
+<Resource content-transfer-encoding="uri-relative" content-type="application/ms-word" isNative="true" unit="document" controlIDStart="BAT00001" controlIDEnd="BAT00002">/000/BAT0001.doc</Resource>
+<Resource content-transfer-encoding="uri-relative" content-type="text/plain" unit="page" ordinal="1" controlIDStart="BAT00001">/000/BAT0001.doc/pages/BAT0001.txt</Resource>
+<Resource content-transfer-encoding="uri-relative" content-type="image/tiff" unit="page" ordinal="2" controlIDStart="BAT00002">/000/BAT0001.doc/pages/BAT0002.tif</Resource>
+<Resource content-transfer-encoding="uri-relative" content-type="text/plain" unit="document" controlIDStart="BAT00001" controlIDEnd="BAT00002">/000/BAT0001.doc/full-text/BAT0001.txt</Resource>
+
+Embedded resources:
+<Resource content-transfer-encoding="8bit" content-type="text/plain" unit="document" controlIDStart="BAT00001" controlIDEnd="BAT00002">This is the full text of the BAT00001.doc. Of course, it's XML escaped, so that &lt; doesn't break our transfer format .</Resource>
+<Resource content-transfer-encoding="base64" content-type="text/plain" unit="document" controlIDStart="BAT00001" controlIDEnd="BAT00002">VGhpcyBpcyB0aGUgZnVsbCB0ZXh0IG9mIHRoZSBCQVQwMDAwMS5kb2MuDCBPZiBjb3Vyc2UsIGl0J3MgWE1MIGVzY2FwZWQsIHNvIHRoYXQgJmx0OyBkb2Vzbid0IGJyZWFrIG91ciB0cmFuc2ZlciBmb3JtYXQgLg==</Resource>
