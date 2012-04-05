@@ -1,4 +1,4 @@
-glob:*.user
-glob:*.suo
-glob:*/bin/*
-glob:*/obj/*
+*.user
+*.suo
+*/bin/*
+*/obj/*
