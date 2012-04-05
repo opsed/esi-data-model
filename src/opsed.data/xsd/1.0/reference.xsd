@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid XML Studio - 30 Day Trial Edition 7.1.4.1284 (http://www.liquid-technologies.com)-->
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://opsed.org/domain-model/1.0/reference.xsd" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ExternalResource">
+    <xs:attribute name="location" type="xs:anyURI" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Base64Content">
+    <xs:simpleContent>
+      <xs:extension base="xs:base64Binary" />
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="HexContent">
+    <xs:simpleContent>
+      <xs:extension base="xs:hexBinary" />
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="TextContent">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="encoding">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="ascii" />
+              <xs:enumeration value="utf-8" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="ESI">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element minOccurs="0" name="Document">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="Property">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="Alias">
+                      <xs:complexType>
+                        <xs:attribute name="name">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:whiteSpace value="preserve" />
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="anyURIValue" type="xs:anyURI" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="base64BinaryValue" type="xs:base64Binary" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="booleanValue" type="xs:boolean" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="byteValue" type="xs:byte" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="dateValue" type="xs:date" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="dateTimeValue" type="xs:dateTime" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="decimalValue" type="xs:decimal" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="doubleValue" type="xs:double" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="durationValue" type="xs:duration" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="floatValue" type="xs:float" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="hexBinaryValue" type="xs:hexBinary" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="intValue" type="xs:int" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="integerValue" type="xs:integer" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="languageValue" type="xs:language" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="longValue" type="xs:long" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="negativeIntegerValue" type="xs:negativeInteger" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="nonNegativeIntegerValue" type="xs:nonNegativeInteger" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="nonPositiveIntegerValue" type="xs:nonPositiveInteger" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="normalizedStringValue" type="xs:normalizedString" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="positiveIntegerValue" type="xs:positiveInteger" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="shortValue" type="xs:short" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="stringValue" type="xs:string" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="timeValue" type="xs:time" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="tokenValue" type="xs:token" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="unsignedByteValue" type="xs:unsignedByte" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="unsignedIntValue" type="xs:unsignedInt" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="unsignedLongValue" type="xs:unsignedLong" />
+                    <xs:element minOccurs="0" maxOccurs="1" name="unsignedShortValue" type="xs:unsignedShort" />
+                  </xs:sequence>
+                  <xs:attribute name="type" use="optional">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:whiteSpace value="preserve" />
+                        <xs:enumeration value="anyURI" />
+                        <xs:enumeration value="base64Binary" />
+                        <xs:enumeration value="boolean" />
+                        <xs:enumeration value="byte" />
+                        <xs:enumeration value="date" />
+                        <xs:enumeration value="dateTime" />
+                        <xs:enumeration value="decimal" />
+                        <xs:enumeration value="double" />
+                        <xs:enumeration value="duration" />
+                        <xs:enumeration value="float" />
+                        <xs:enumeration value="hexBinary" />
+                        <xs:enumeration value="int" />
+                        <xs:enumeration value="integer" />
+                        <xs:enumeration value="language" />
+                        <xs:enumeration value="long" />
+                        <xs:enumeration value="negativeInteger" />
+                        <xs:enumeration value="nonNegativeInteger" />
+                        <xs:enumeration value="nonPositiveInteger" />
+                        <xs:enumeration value="normalizedString" />
+                        <xs:enumeration value="positiveInteger" />
+                        <xs:enumeration value="short" />
+                        <xs:enumeration value="string" />
+                        <xs:enumeration value="time" />
+                        <xs:enumeration value="token" />
+                        <xs:enumeration value="unsignedByte" />
+                        <xs:enumeration value="unsignedInt" />
+                        <xs:enumeration value="unsignedLong" />
+                        <xs:enumeration value="unsignedShort" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="Conversion">
+                <xs:complexType>
+                  <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="Page">
+                      <xs:complexType>
+                        <xs:choice>
+                          <xs:element minOccurs="0" maxOccurs="1" name="ExternalResource">
+                            <xs:complexType>
+                              <xs:complexContent mixed="false">
+                                <xs:extension xmlns:q1="http://opsed.org/domain-model/1.0/reference.xsd" base="q1:ExternalResource" />
+                              </xs:complexContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element xmlns:q6="http://opsed.org/domain-model/1.0/reference.xsd" name="Base64Content" type="q6:Base64Content" />
+                          <xs:element xmlns:q7="http://opsed.org/domain-model/1.0/reference.xsd" name="HexContent" type="q7:HexContent" />
+                          <xs:element xmlns:q8="http://opsed.org/domain-model/1.0/reference.xsd" name="TextContent" type="q8:TextContent" />
+                        </xs:choice>
+                        <xs:attribute name="ordinal" type="xs:unsignedInt" use="optional" />
+                        <xs:attribute name="controlId" type="xs:string" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ExternalResource">
+                      <xs:complexType>
+                        <xs:complexContent mixed="false">
+                          <xs:extension xmlns:q2="http://opsed.org/domain-model/1.0/reference.xsd" base="q2:ExternalResource" />
+                        </xs:complexContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element xmlns:q6="http://opsed.org/domain-model/1.0/reference.xsd" name="Base64Content" type="q6:Base64Content" />
+                    <xs:element xmlns:q7="http://opsed.org/domain-model/1.0/reference.xsd" name="HexContent" type="q7:HexContent" />
+                    <xs:element xmlns:q8="http://opsed.org/domain-model/1.0/reference.xsd" name="TextContent" type="q8:TextContent" />
+                  </xs:choice>
+                  <xs:attribute default="document" name="unit">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="document" />
+                        <xs:enumeration value="page" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="controlIDStart" type="xs:string" use="optional" />
+                  <xs:attribute name="controlIDEnd" type="xs:string" use="optional" />
+                  <xs:attribute name="contentType" type="xs:string" use="optional" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" maxOccurs="1" name="ExternalResource">
+                <xs:complexType>
+                  <xs:complexContent mixed="false">
+                    <xs:extension xmlns:q2="http://opsed.org/domain-model/1.0/reference.xsd" base="q2:ExternalResource" />
+                  </xs:complexContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element xmlns:q6="http://opsed.org/domain-model/1.0/reference.xsd" name="Base64Content" type="q6:Base64Content" />
+              <xs:element xmlns:q7="http://opsed.org/domain-model/1.0/reference.xsd" name="HexContent" type="q7:HexContent" />
+              <xs:element xmlns:q8="http://opsed.org/domain-model/1.0/reference.xsd" name="TextContent" type="q8:TextContent" />
+            </xs:choice>
+            <xs:attribute name="controlIDStart" use="optional">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:whiteSpace value="preserve" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="controlIDEnd" use="optional">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:whiteSpace value="preserve" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="contentType" type="xs:string" use="optional" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="custodian" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:whiteSpace value="preserve" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

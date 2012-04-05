@@ -1,0 +1,95 @@
+PST... 
+FOLDER... 
+IMAP.. 
+NSF... 
+DOMINO.. 
+SHAREPOINT... 
+VENDER DB (eg. CLEARWELL, discovere, etc..).... 
+CONCORDANCE VOLUME
+
+PROBLEM: unstructured content exists somewhere, need to access in a standardize manner
+SOLUTION: wrapped access to the content using a ESI Datasource layer
+
+PROBLEM: need a ubiquitous name for each ESI resource
+SOLUTION: URNs!!!
+
+PROBLEM: once we have a URN, how to get the content ?
+SOLUTION: URN Resolver
+
+ESI Datasource provides a common means to access ESI 
+regardless of storage format or location.
+
+ESI Datasource provides a standardized set of functionality:
+- Manages a discrete collection of ESI resources
+  - POST, DELETE, etc. for raw items
+  - POST Could contain the data itself, or some other reference which 
+    indicates where to obtain the data... the ESI server may aggressively
+	collect and cache the data, or just lazily maintain the reference until
+	a GET is requested for that resource
+- Assigns URNs for each ESI resource it contains
+
+- Resolves URNS:
+  - N2NN - name to names (URN->URN aliases)
+  - N2LL - name to locations (URN->URI aliases)
+
+  - Responds to GET and LIST requests for any valid ESI URI/URN
+  - GET-> returns resource content in OpSED XML format 
+    - Optional Content-Type header to specify what representation of the 
+	  resource that you want embedded in the OpSED XML. 
+	  Formats are MIME types, which indicate what 
+	  representation format to return the native resource as...
+	  eg... text/plain, text/html, image/tiff, etc. 
+	  Default format is application/binary, this can be more than one
+	  format. If conversion is necessary to respond to the request, 
+	  the ESI Datasource may perform the conversion on the fly, or 
+	  fail with 404 if it doesn't support that capability.
+	  
+  - LIST -> returns child items in ATOM feed format
+    - optional "Content-Type" header to specify what kind of child items 
+	  which is relevant for ESI resources that are containers in multiple 
+	  formats. Formats are MIME types, which indicate what container
+	  type to analyze the resource as
+
+Examples:
+
+LIST esi://my.datasource.com:username@password/
+ - returns ATOM feed of all root items on this ESI server
+
+GET esi://my.datasource.com:username@password/
+ - returns all ESI on this server (costly!)
+
+N2NN esi://my.datasource.com:username@password/
+Name: urn:stuff:1234
+ - returns all URN aliases for the given URN
+
+N2LL esi://my.datasource.com:username@password/
+Name: urn:stuff:1234
+ - returns all URI aliases for the given URN
+ 
+ ----
+CONNECT esi://my.datasource.com/
+Authorize: user@pass
+
+LIST urn:stuff:1234
+Content-Type: application/ms-ole
+ - returns ATOM feed of all OLE items contained in the 
+   specific named resource
+---
+
+CONNECT esi://my.datasource.com:username@password/
+GET urn:stuff:1234 HTTP/1.1
+Host: my.datasource.com:80
+Authorization: username@password
+Content-Type: application/binary; text/html
+Content-Embedding: URI:application/binary; embedded:text/html;
+ - Returns OpSED XML containing the named resource, it's metadata,
+   and the content in both "native" format and plain text.  
+
+POST esi://my.datasource.com:username@password/
+
+
+
+URLs look like: 
+- esi://my.datasource.com/75c86c31-e199-31d9-b93C-0003959e0c41
+  - all items managed by the ESI server have a URN:UUID:<id>, and can be operated on/referenced
+    using that UUID off the root. 

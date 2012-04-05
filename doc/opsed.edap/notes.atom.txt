@@ -1,0 +1,70 @@
+ATOM Notes:
+
+- MUST be well formed XML
+- constructs are: TEXT/PERSON/DATE
+
+feed == document root element
+ MUST contain:
+ - author (1..N)
+ - id (1)
+ - title (1)
+ - updated (1)
+ 
+ SHOULD contain: 
+ - link rel="self" (1)
+  
+ MAY contain: 
+ - category
+ - contributor
+ - generator (0..1)
+ - icon (0..1)
+ - logo (0..1)
+ - link rel="alternate" (0..1)
+ - link * (0...n)
+ - rights (0..1)
+ - subtitle (0..1)
+ - ENTRY (0...N)
+ 
+entry: 
+	MUST: 
+	- id (1)
+	- title (1)
+	- updated (1)
+	MAY: 
+	- author
+	- category
+	- content (0..1)
+	- contributor (0..N)
+	- link
+	- published (0..N)
+	- rights (0..N)
+	- source (0..N)
+	- summary (0..1)
+	
+	
+	
+What our ATOM feeds will look like:
+
+ESI protocol:
+CONNECT esi://my.datasource.com/
+Authorize: user@pass
+
+# this is the URN of a PST stored in the server
+LIST urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6 
+ - returns ATOM feed of all items contained in the 
+   specific named resource, in this case, entryids of messages in the pst...
+---
+
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<!-- This is the custodian -->
+	<author>
+		<name>John Doe</name>
+		<uri>esi://my.server.com/CASE_ID/CUSTODIAN_ID</uri>
+	</author>
+	<!-- This is the URI -->
+	<id></id>
+	<title type="html">Children for </title>
+	<updated>
+	</updated>
+</feed>

@@ -1,0 +1,62 @@
+<!-- 
+What our ATOM feeds will look like:
+
+ESI protocol:
+CONNECT esi://my.datasource.com/
+Authorize: user@pass
+
+# this is the URN of a PST stored in the server
+LIST urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6 
+ - returns ATOM feed of all items contained in the 
+   specific named resource, in this case, entryids of messages in the pst...
+-->
+
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+		<!-- This is the custodian, this urn is specific to a single custodian in a single case. -->
+		<author>
+				<name>John Doe</name>
+				<uri>urn:custodian:93840298j34</uri>
+		</author>
+
+		<!-- This is the URN of the feed, basically same thing that was passed to ESI:LIST -->
+		<id>urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6</id>
+
+		<!-- This is a human readable title for the feed. -->
+		<title type="html">
+				Children for &lt;a href="esi://my.datasource.com/60a76c80-d399-11d9-b93C-0003939e0af6">John_Doe_Email.pst &lt;/a> 
+		</title>
+
+		<!-- This is the last time that the URN of the feed was updated. -->
+		<updated>2005-07-31T12:29:29Z</updated>
+		
+		<!-- Here starts the list of child items, one for each entryid in the PST. -->
+		<entry>
+				
+				<!-- This is the URN of the child item -->
+				<id>urn:uuid:45a86c83-d199-31d9-b93C-0003959e0ab1</id>
+				
+				<!-- This is a human readable title for the feed. -->
+				<title type="html">
+						&lt;a href="esi://my.datasource.com/45a86c83-d199-31d9-b93C-0003959e0ab1">Welcome to Outlook 2007.msg &lt;/a> 
+				</title>
+				
+				<!-- This is the last time that item was updated. -->
+				<updated>2005-07-31T12:29:29Z</updated>
+		</entry>
+		
+		<entry>
+				
+				<!-- This is the URN of the child item -->
+				<id>urn:uuid:75c86c31-e199-31d9-b93C-0003959e0c41</id>
+				
+				<!-- This is a human readable title for the feed. -->
+				<title type="html">
+						&lt;a href="esi://my.datasource.com/75c86c31-e199-31d9-b93C-0003959e0c41">My first day at work.msg &lt;/a> 
+				</title>
+				
+				<!-- This is the last time that item was updated. -->
+				<updated>2005-07-31T04:29:29Z</updated>
+		</entry>
+</feed>

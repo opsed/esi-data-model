@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ESI xmlns="http://mercurial.opsed.org/esi-data-model/xsd/1.0/reference.xsd" custodian="OpSED Development">
+	<!-- An example word document -->
+	<Document controlIDStart="BAT0001" controlIDEnd="BAT0002" contentType="application/word">	
+
+		<ExternalResource location="/native/BAT0001.doc" />
+		
+		<Property type="dateTime">
+			<Alias name="CreationDate" />
+			<Alias name="DateCreated" />
+			<dateTimeValue>2009-02-20T14:03:00</dateTimeValue>
+		</Property>
+		
+		<!-- single-page tiff stored in external file -->
+		<Conversion contentType="image/tiff" unit="page" controlIDStart="BAT0001" controlIDEnd="BAT0002" >
+			<Page ordinal="0" controlId="BAT0001">
+				<ExternalResource location="/images/BAT0001.tif" />				
+			</Page>
+			<Page ordinal="1" controlId="BAT0002">
+				<ExternalResource location="/images/BAT0002.tif" />
+			</Page>
+		</Conversion>
+
+		<!-- multi-page tiff document stored in external file -->		
+		<Conversion contentType="image/tiff" unit="document" controlIDStart="BAT0001" controlIDEnd="BAT0002" >
+			<ExternalResource location="/images/BAT0001.tif" />
+		</Conversion>
+
+		<!-- multi-page text document stored in external file -->		
+		<Conversion contentType="text/plain" unit="document" controlIDStart="BAT0001" controlIDEnd="BAT0002" >
+			<ExternalResource location="/images/BAT0001.txt" />
+		</Conversion>
+		
+		<!-- multi-page text document stored as embedded content (all pages in a big blob)-->		
+		<Conversion contentType="text/plain" unit="document" controlIDStart="BAT0001" controlIDEnd="BAT0002" >
+			<TextContent encoding="ascii">This is Page 1. This is Page 2. This is non-paginated text.</TextContent>
+		</Conversion>
+		
+	</Document>
+</ESI>
